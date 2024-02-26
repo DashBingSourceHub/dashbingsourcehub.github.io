@@ -8,5 +8,4 @@ def get_url(url:str):
 def main():
     print("欢迎使用Dash在线软件索引1.0版本")
 
-if __name__ == "__main__":
-    main()
+main()
