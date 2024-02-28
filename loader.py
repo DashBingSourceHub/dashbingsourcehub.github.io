@@ -23,6 +23,8 @@ func_list = '''\033[1;32m _______________________
 \033[1;32m  |   ____________________|_
 \033[1;32m   \\_/______________________/\033[0;37m'''
 
+value_global = {}
+
 def printc(char, text):
     print(char, text, "\033[0;37m")
 
@@ -51,7 +53,8 @@ def main():
                 pkg_list = loads(get_url(home_url+"index_py.json"))
                 m = inputc("\033[1;32m", "请输入软件包名称 ?> ")
                 if m in pkg_list:
-                    exec(get_url(py_url+pkg_list[m]), {}, {})
+                    temp_values = {}
+                    exec(get_url(py_url+pkg_list[m]), value_global, temp_values)
                 else:
                     printc("\033[1;31m", "[错误] 软件包不存在")
             except:
