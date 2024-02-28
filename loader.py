@@ -1,4 +1,4 @@
-from urllib3 import PoolManager
+from urllib import request
 from json import loads
 
 version = "v1.0.0"
@@ -32,10 +32,7 @@ def inputc(char, text):
     print(char, end="")
     return(input(text+"\033[0;37m"))
 
-pmgr = PoolManager()
-
-def get_url(url:str):
-    return(pmgr.request("GET", url).data.decode("utf-8"))
+get_url = lambda url: request.urlopen(url).read().decode("utf-8")
 
 def main():
     print(title%version)
