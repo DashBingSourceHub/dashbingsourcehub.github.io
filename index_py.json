@@ -1,1 +1,10 @@
-{"test":"test.py"}
+{
+    "test":{
+        "name":"test.py",
+        "req":[]
+    },
+    "test2":{
+        "name":"test.py",
+        "req":["fuck"]
+    }
+}

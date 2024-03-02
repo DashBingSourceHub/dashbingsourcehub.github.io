@@ -34,6 +34,14 @@ def inputc(char, text):
 
 get_url = lambda url: request.urlopen(url).read().decode("utf-8")
 
+def pkg_have(pkg_name):
+    try:
+        __import__(pkg_name)
+    except:
+        return(False)
+    else:
+        return(True)
+
 def main():
     print(title%version)
     pkg_list = {}
@@ -53,7 +61,16 @@ def main():
                 m = inputc("\033[1;32m", "请输入软件包名称 ?> ")
                 if m in pkg_list:
                     temp_values = {}
-                    exec(get_url(py_url+pkg_list[m]), value_global, temp_values)
+                    temp_reqs = []
+                    for i in pkg_list[m]["req"]:
+                        if not pkg_have(i):
+                            temp_reqs.append(i)
+                    if len(temp_reqs) == 0:
+                        exec(get_url(py_url+pkg_list[m]["name"]), value_global, temp_values)
+                    else:
+                        printc("\033[1;31m", "[错误] 缺少以下软件包：")
+                        for i in temp_reqs:
+                            printc("\033[1;31m", i)
                 else:
                     printc("\033[1;31m", "[错误] 软件包不存在")
             except:
