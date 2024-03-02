@@ -68,7 +68,7 @@ def main():
                     if len(temp_reqs) == 0:
                         exec(get_url(py_url+pkg_list[m]["name"]), value_global, temp_values)
                     else:
-                        printc("\033[1;31m", "[错误] 缺少以下软件包：")
+                        printc("\033[1;31m", "[错误] 缺少以下依赖库：")
                         for i in temp_reqs:
                             printc("\033[1;31m", i)
                 else:
