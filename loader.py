@@ -1,4 +1,4 @@
-from urllib import request
+from requests import get
 from json import loads
 
 version = "v1.0.0"
@@ -32,7 +32,7 @@ def inputc(char, text):
     print(char, end="")
     return(input(text+"\033[0;37m"))
 
-get_url = lambda url: request.urlopen(url).read().decode("utf-8")
+get_url = lambda url: get(url).content.decode("utf-8")
 
 def pkg_have(pkg_name):
     try:
