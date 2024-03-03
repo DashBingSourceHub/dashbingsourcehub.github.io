@@ -33,6 +33,7 @@ def inputc(char, text):
     return(input(text+"\033[0;37m"))
 
 get_url = lambda url: get(url).content.decode("utf-8")
+get_onlpy = get_url
 
 def pkg_have(pkg_name):
     try:
@@ -42,22 +43,25 @@ def pkg_have(pkg_name):
     else:
         return(True)
 
+class DashwareStdlib:
+    pass
+
 def main():
     print(title%version)
-    pkg_list = {}
+    pkg_list = {"DashwareStdlib":DashwareStdlib}
     while True:
         print(func_list)
         s = inputc("\033[1;32m", "?> ")
         if s == "1":
             try:
-                pkg_list = loads(get_url(home_url+"index_py.json"))
+                pkg_list = loads(get_onlpy(home_url+"index_py.json"))
                 for i in pkg_list:
                     printc("\033[1;32m", i)
             except:
                 printc("\033[1;31m", "[错误] 网络异常")
         elif s == "2":
             try:
-                pkg_list = loads(get_url(home_url+"index_py.json"))
+                pkg_list = loads(get_onlpy(home_url+"index_py.json"))
                 m = inputc("\033[1;32m", "请输入软件包名称 ?> ")
                 if m in pkg_list:
                     temp_values = {}
@@ -66,7 +70,7 @@ def main():
                         if not pkg_have(i):
                             temp_reqs.append(i)
                     if len(temp_reqs) == 0:
-                        exec(get_url(py_url+pkg_list[m]["name"]), value_global, temp_values)
+                        exec(get_onlpy(py_url+pkg_list[m]["name"]), value_global, temp_values)
                     else:
                         printc("\033[1;31m", "[错误] 缺少以下依赖库：")
                         for i in temp_reqs:

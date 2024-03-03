@@ -1,10 +1,6 @@
 {
-    "test":{
-        "name":"test.py",
-        "req":[]
-    },
-    "test2":{
-        "name":"test.py",
-        "req":["fuck"]
+    "symsolve":{
+        "name":"symsolve.py",
+        "req":["sympy"]
     }
 }
