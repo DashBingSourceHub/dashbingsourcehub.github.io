@@ -6,6 +6,14 @@ version = "v%d.%d.%d %s"%builtin_version
 home_url = "https://dashbingsourcehub.github.io/"
 py_url = home_url + "py/"
 
+class DswStdlib:
+    version = version
+    builtin_version = builtin_version
+    home_url = home_url
+    py_url = py_url
+
+value_global = {"DswStdlib":DswStdlib}
+
 title = '''\033[1;32m ____            _   \033[1;31m     ____         __ _
 \033[1;32m|  _ \  __ _ ___| |__ \033[1;31m   / ___|  ___  / _| |___      ____ _ _ __ ___
 \033[1;32m| | | |/ _` / __| '_ \ \033[1;31m  \___ \ / _ \| |_| __\ \ /\ / / _` | '__/ _ \\
@@ -24,8 +32,6 @@ func_list = '''\033[1;32m _______________________
 \033[1;32m  |   ____________________|_
 \033[1;32m   \\_/______________________/\033[0;37m'''
 
-value_global = {}
-
 def printc(char, text):
     print(char, text, "\033[0;37m")
 
@@ -33,7 +39,13 @@ def inputc(char, text):
     print(char, end="")
     return(input(text+"\033[0;37m"))
 
-get_url = lambda url: get(url).content.decode("utf-8")
+def get_url (url):
+    try:
+        return(get(url).content.decode("utf-8"))
+    except:
+        printc("\033[1;31m", "[错误] 网络异常")
+        return(None)
+
 get_onlpy = get_url
 
 def pkg_have(pkg_name):
@@ -44,15 +56,9 @@ def pkg_have(pkg_name):
     else:
         return(True)
 
-class DswStdlib:
-    version = version
-    builtin_version = builtin_version
-    home_url = home_url
-    py_url = py_url
-
 def main():
     print(title%version)
-    pkg_list = {"DswStdlib":DswStdlib}
+    pkg_list = {}
     while True:
         print(func_list)
         s = inputc("\033[1;32m", "?> ")
@@ -63,7 +69,7 @@ def main():
                 for i in pkg_list:
                     printc("\033[1;32m", i)
             except:
-                printc("\033[1;31m", "[错误] 网络异常")
+                printc("\033[1;31m", "[错误] 加载程序运行出错")
         elif s == "2":
             try:
                 pkg_list = loads(get_onlpy(home_url+"index_py.json"))
@@ -86,7 +92,7 @@ def main():
                 else:
                     printc("\033[1;31m", "[错误] 软件包不存在")
             except:
-                printc("\033[1;31m", "[错误] 网络异常")
+                printc("\033[1;31m", "[错误] 加载程序运行出错")
         elif s.upper() == "E":
             exit()
         else:
