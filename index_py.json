@@ -2,5 +2,9 @@
     "symsolve":{
         "name":"symsolve.py",
         "req":["sympy"]
+    },
+    "test_std":{
+        "name":"test_std.py",
+        "req":[]
     }
 }

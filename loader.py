@@ -1,7 +1,8 @@
 from requests import get
 from json import loads
 
-version = "v1.0.0"
+builtin_version = (1,0,0,"")
+version = "v%d.%d.%d %s"%builtin_version
 home_url = "https://dashbingsourcehub.github.io/"
 py_url = home_url + "py/"
 
@@ -43,18 +44,22 @@ def pkg_have(pkg_name):
     else:
         return(True)
 
-class DashwareStdlib:
-    pass
+class DswStdlib:
+    version = version
+    builtin_version = builtin_version
+    home_url = home_url
+    py_url = py_url
 
 def main():
     print(title%version)
-    pkg_list = {"DashwareStdlib":DashwareStdlib}
+    pkg_list = {"DswStdlib":DswStdlib}
     while True:
         print(func_list)
         s = inputc("\033[1;32m", "?> ")
         if s == "1":
             try:
                 pkg_list = loads(get_onlpy(home_url+"index_py.json"))
+                pkg_list = sorted(pkg_list)
                 for i in pkg_list:
                     printc("\033[1;32m", i)
             except:
@@ -70,7 +75,10 @@ def main():
                         if not pkg_have(i):
                             temp_reqs.append(i)
                     if len(temp_reqs) == 0:
-                        exec(get_onlpy(py_url+pkg_list[m]["name"]), value_global, temp_values)
+                        try:
+                            exec(get_onlpy(py_url+pkg_list[m]["name"]), value_global, temp_values)
+                        except:
+                            printc("\033[1;31m", "[错误] 程序运行时出错，请联系负责人")
                     else:
                         printc("\033[1;31m", "[错误] 缺少以下依赖库：")
                         for i in temp_reqs:
