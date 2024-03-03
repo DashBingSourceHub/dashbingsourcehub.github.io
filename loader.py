@@ -69,7 +69,7 @@ def main():
                 for i in pkg_list:
                     printc("\033[1;32m", i)
             except:
-                printc("\033[1;31m", "[错误] 加载程序运行出错")
+                printc("\033[1;31m", "[错误] 程序运行出错 Error:101")
         elif s == "2":
             try:
                 pkg_list = loads(get_onlpy(home_url+"index_py.json"))
@@ -84,7 +84,7 @@ def main():
                         try:
                             exec(get_onlpy(py_url+pkg_list[m]["name"]), value_global, temp_values)
                         except:
-                            printc("\033[1;31m", "[错误] 程序运行时出错，请联系负责人")
+                            printc("\033[1;31m", "[错误] 程序运行时出错 Error:200")
                     else:
                         printc("\033[1;31m", "[错误] 缺少以下依赖库：")
                         for i in temp_reqs:
@@ -92,7 +92,7 @@ def main():
                 else:
                     printc("\033[1;31m", "[错误] 软件包不存在")
             except:
-                printc("\033[1;31m", "[错误] 加载程序运行出错")
+                printc("\033[1;31m", "[错误] 程序运行出错 Error:102")
         elif s.upper() == "E":
             exit()
         else:
